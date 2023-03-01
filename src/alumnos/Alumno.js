@@ -8,8 +8,8 @@ class alumnos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      alumnoToDelete:{},
-      modalConfirmarEliminacion:false,
+      alumnoToDelete: {},
+      modalConfirmarEliminacion: false,
       alumno: []
     };
     this.onDelete = this.onDelete.bind(this);
@@ -17,12 +17,12 @@ class alumnos extends React.Component {
     this.handleOpen = this.handleOpen.bind(this);
   }
 
-  handleClose(){
+  handleClose() {
     this.setState({
       modalConfirmarEliminacion: false
     });
   }
-  handleOpen(alumno){
+  handleOpen(alumno) {
     this.setState({
       alumnoToDelete: alumno,
       modalConfirmarEliminacion: true
@@ -83,10 +83,10 @@ class alumnos extends React.Component {
       headers: {
         'Content-Type': 'application/json',
         "Accept": 'application/json',
-        "authorization":sessionStorage.getItem('token')
+        "authorization": sessionStorage.getItem('token')
       }
-    }; 
-    fetch("http://localhost:8080/api/alumno",request)
+    };
+    fetch("http://localhost:8080/api/alumno", request)
       .then(res => {
         return res.json().then(body => {
           return {
@@ -114,27 +114,28 @@ class alumnos extends React.Component {
             progress: undefined,
             theme: "light",
           });
-        } 
+        }
       },
-      (error) => {
-        console.log(error);
-        this.setState({ 
-          error,
-          alumno: [],
-          modalConfirmarEliminacion: false
-        });
-      }
-    )
+        (error) => {
+          console.log(error);
+          this.setState({
+            error,
+            alumno: [],
+            modalConfirmarEliminacion: false
+          });
+        }
+      )
   }
   render() {
-   
+
     let rowsTable = this.state.alumno.map((alumno, index) => {
       return (
-        
+
         <tr key={index}>
-          {/* <td>{alumno.id}</td> */}
+          <td>{alumno.id}</td>
           <td>{alumno.nombre}</td>
           <td>{alumno.apellido}</td>
+          <td>{alumno.dni}</td>
           <td>
             <Link to={`/alumno/gest/${alumno.id}`}>
               <button className="btn btn-primary">
@@ -152,20 +153,32 @@ class alumnos extends React.Component {
             </button>
           </td>
         </tr>
-        
+
       )
     });
 
     return (
       <>
-        <h1>Lista de alumnos</h1>
+        <h1>Lista de alumnos
+
+        </h1>
+
         <table className="table table-striped">
           <thead>
             <tr>
-              {/* <th>Id</th> */}
+              <th>Id</th>
               <th>Nombre</th>
               <th>Apellido</th>
+              <th>DNI</th>
               <th>Acciones</th>
+              <th><Link to={`/alumno/gest`}>
+                <button className="btn btn-primary">
+                  <span className="material-symbols-outlined">
+                    add_circle
+                  </span>
+                </button>
+              </Link>
+              </th>
             </tr>
           </thead>
           <tbody>

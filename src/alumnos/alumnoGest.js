@@ -4,13 +4,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams } from "react-router-dom";
 
-class InternalalumnoGest extends React.Component {
+class InternalAlumnoGest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       id: '',
       nombre: '',
-      apellido: ''
+      apellido: '',
+      dni:''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,6 +44,8 @@ class InternalalumnoGest extends React.Component {
               id: result.body.id,
               nombre: result.body.nombre,
               apellido: result.body.apellido,
+              dni: result.body.dni,
+
             });
           } else {
             toast.error(result.body.message, {
@@ -61,7 +64,8 @@ class InternalalumnoGest extends React.Component {
       this.setState({
         id: '',
         nombre: '',
-        apellido: ''
+        apellido: '',
+        dni:''
       });
     }
   }
@@ -75,7 +79,8 @@ class InternalalumnoGest extends React.Component {
     let data = {
       id: this.state.id,
       nombre: this.state.nombre,
-      apellido: this.state.apellido
+      apellido: this.state.apellido,
+      dni: this.state.dni,
     };
 
     let request = {
@@ -112,7 +117,7 @@ class InternalalumnoGest extends React.Component {
             progress: undefined,
             theme: "light",
           });
-          this.props.navigate("/alumno/list");
+          this.props.navigate("/alumno");
         } else {
           toast.error(result.body.message, {
             position: "bottom-right",
@@ -138,10 +143,7 @@ class InternalalumnoGest extends React.Component {
         <div className="col">
           <h1>{this.props.params.id ? "Modificando " + this.state.apellido : "Creando alumno"}</h1>
           <form onSubmit={this.handleSubmit} method="POST">
-            <div className="mb-3">
-              <label htmlFor="id" className="form-label">id</label>
-              <input type="text" className="form-control" id="id" name="id" value={this.state.id} onChange={this.handleChange} />
-            </div>
+            
             <div className="mb-3">
               <label htmlFor="nombre" className="form-label">Nombre:</label>
               <input type="text" className="form-control" id="nombre" name="nombre" value={this.state.nombre} onChange={this.handleChange} />
@@ -149,6 +151,10 @@ class InternalalumnoGest extends React.Component {
             <div className="mb-3">
               <label htmlFor="apellido" className="form-label">Apellido:</label>
               <input type="text" className="form-control" id="apellido" name="apellido" value={this.state.apellido} onChange={this.handleChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="apellido" className="form-label">dni:</label>
+              <input type="text" className="form-control" id="dni" name="dni" value={this.state.dni} onChange={this.handleChange} />
             </div>
             <button type="submit" className="btn btn-primary" >
               <span className="material-symbols-outlined center-align" >
@@ -167,11 +173,11 @@ class InternalalumnoGest extends React.Component {
 
 
 
-export function alumnoGest(props) {
+export function AlumnoGest(props) {
   const navigate = useNavigate();
   const params = useParams();
 
-  return <InternalalumnoGest navigate={navigate} params={params} />
+  return <InternalAlumnoGest navigate={navigate} params={params} />
 }
 
-export default alumnoGest;
+export default AlumnoGest;

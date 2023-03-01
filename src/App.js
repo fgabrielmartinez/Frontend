@@ -5,7 +5,7 @@ import Alumno from './alumnos/Alumno';
 import Home from './Home';
 import Login from './Login';
 import Menu from './Menu';
-import alumnoGest from './alumnos/alumnoGest';
+import AlumnoGest from './alumnos/AlumnoGest';
 import PersonaGest from './persona/PersonaGest';
 import PersonaGrid from './persona/PersonaGrid';
 import PersonaList from './persona/PersonaList';
@@ -19,8 +19,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Cursos" element={<Cursos />} />
           <Route path="/alumno" element={<Alumno />} />
-          <Route path="/alumno/gest/:id" element={<alumnoGest />} />
-          <Route path="/alumno/gest" element={<alumnoGest />} />
+          <Route path="/alumno/gest/:id" element={<AlumnoGest />} />
+          <Route path="/alumno/gest" element={<AlumnoGest />} />
           <Route path="/persona/list" element={<PersonaList />} />
           <Route path="/persona/grid" element={<PersonaGrid />} />
           <Route path="/persona/gest/:dni" element={<PersonaGest />} />
