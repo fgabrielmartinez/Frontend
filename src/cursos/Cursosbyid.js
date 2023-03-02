@@ -152,7 +152,7 @@ class Cursos extends React.Component {
               <span>
               </span>
             </button>
-            <Link to={`/curso/byid/${curso.id}`}>
+            <Link to={`/curso/gest/${curso.id}`}>
               <button className="btn btn-primary">
                 <span className="material-symbols-outlined">
                   edit
