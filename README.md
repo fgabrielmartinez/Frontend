@@ -1,4 +1,4 @@
-# Frontend para App de Gestion de Alumnos
+# Frontend para App de Gestión de Alumnos
 
 
 
