@@ -25,7 +25,7 @@ function Menu() {
         console.log("salir");
         sessionStorage.removeItem("token");
         setToken("");
-        //navigate("/"); 
+        navigate("/"); 
     }
 
     if (token!=="" && token !== null) {
@@ -48,13 +48,7 @@ function Menu() {
                                 <Link to="/Cursos" className="nav-link">Cursos</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/persona/list" className="nav-link">Listar Personas</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to="/persona/grid" className="nav-link">Grilla Personas</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to="/persona/gest" className="nav-link">Gestion Personas</Link>
+                                <Link to="/Alumno" className="nav-link">Alumnos</Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" onClick={() => salir()}>
@@ -84,11 +78,9 @@ function Menu() {
                                 <Link to="/" className="nav-link active">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/Cursos" className="nav-link">Cursos</Link>
+                                <Link to="/Cursos2" className="nav-link">Cursos</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link to="/Alumno" className="nav-link">Alumnos</Link>
-                            </li>
+                           
                             <li className="nav-item">
                                 <Link to="/login" className="nav-link">
                                     Ingresar                  

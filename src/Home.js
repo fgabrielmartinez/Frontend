@@ -4,7 +4,7 @@ import Menu from "./Menu";
 function Home() {
     return <>
         <div>
-            <h1>Bienvenido a la  plataforma de gestión de cursos de Silicon Misiones</h1>
+            <h1>Bienvenido a la  Plataforma de Gestión de Cursos de Silicon Misiones</h1>
             <h2>Creando talento IT en el nordeste Argentino</h2>
         </div>
 

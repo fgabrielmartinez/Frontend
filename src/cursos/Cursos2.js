@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-class Cursos extends React.Component {
+class Cursos2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -133,33 +133,11 @@ class Cursos extends React.Component {
       return (
         
         <tr key={index}>
-          <td>{curso.id}</td>
+       
           <td>{curso.nombre}</td>
           <td>{curso.descripcion}</td>
           <td>{curso.anio}</td>
-          <td>
-            <Link to={`/curso/gest/${curso.id}`}>
-              <button className="btn btn-primary">
-                <span className="material-symbols-outlined">
-                  edit
-                </span>
-              </button>
-            </Link>
-            <button type="submit" className="btn btn-danger" onClick={() => this.handleOpen(curso)}>
-              <span className="material-symbols-outlined center-align">
-                delete_forever
-              </span>
-              <span>
-              </span>
-            </button>
-            <Link to={`/curso/gest/${curso.id}`}>
-              <button className="btn btn-primary">
-                <span className="material-symbols-outlined">
-                  edit
-                </span>
-              </button>
-            </Link>
-          </td>
+         
         </tr>
         
       )
@@ -172,44 +150,17 @@ class Cursos extends React.Component {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>Id</th>
+          
               <th>Nombre</th>
               <th>Descripcion</th>
               <th>Año</th>
-              <th>Acciones</th>
-              <th><Link to={`/curso/gest`}>
-                <button className="btn btn-primary">
-                  <span className="material-symbols-outlined">
-                    add_circle
-                  </span>
-                </button>
-              </Link>
-              </th>
             </tr>
           </thead>
           <tbody>
             {rowsTable}
           </tbody>
         </table>
-        <Modal
-          show={this.state.modalConfirmarEliminacion}
-          onHide={this.handleClose}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton className="dark-content">
-            <Modal.Title>Confirmar eliminacion</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Esta seguro que desea eliminar el curso: <strong> {this.state.cursoToDelete.nombre}</strong>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Cerrar
-            </Button>
-            <Button variant="primary" onClick={this.onDelete}>Eliminar</Button>
-          </Modal.Footer>
-        </Modal>
+     
       </>
 
     );
@@ -217,4 +168,4 @@ class Cursos extends React.Component {
 }
 
 
-export default Cursos;
+export default Cursos2;

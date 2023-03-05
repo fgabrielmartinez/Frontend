@@ -139,12 +139,15 @@ class Cursos extends React.Component {
           <td>{curso.anio}</td>
           <td>
             <Link to={`/curso/gest/${curso.id}`}>
+            <abbr title="Editar Curso">
               <button className="btn btn-primary">
                 <span className="material-symbols-outlined">
                   edit
                 </span>
               </button>
+              </abbr>
             </Link>
+            <abbr title="Eliminar Curso">
             <button type="submit" className="btn btn-danger" onClick={() => this.handleOpen(curso)}>
               <span className="material-symbols-outlined center-align">
                 delete_forever
@@ -152,12 +155,24 @@ class Cursos extends React.Component {
               <span>
               </span>
             </button>
-            <Link to={`/curso/byid/${curso.id}`}>
+            </abbr>
+            <Link to={`/curso/byid/${curso.id}/${curso.nombre}`}>
+            <abbr title="Ver Inscriptos">
               <button className="btn btn-primary">
                 <span className="material-symbols-outlined">
-                  edit
+                  search
                 </span>
               </button>
+              </abbr>
+            </Link>
+            <Link to={`/curso/insc/${curso.id}/${curso.nombre}`}>
+            <abbr title="Gestionar Inscriptos">
+              <button className="btn btn-primary">
+                <span className="material-symbols-outlined">
+                  settings
+                </span>
+              </button>
+              </abbr>
             </Link>
           </td>
         </tr>
@@ -178,11 +193,13 @@ class Cursos extends React.Component {
               <th>Año</th>
               <th>Acciones</th>
               <th><Link to={`/curso/gest`}>
+              <abbr title="Agregar Curso">
                 <button className="btn btn-primary">
                   <span className="material-symbols-outlined">
-                    add_circle
+                  add_circle
                   </span>
                 </button>
+                </abbr>
               </Link>
               </th>
             </tr>

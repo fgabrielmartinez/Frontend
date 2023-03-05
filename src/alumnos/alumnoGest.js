@@ -153,7 +153,7 @@ class InternalAlumnoGest extends React.Component {
               <input type="text" className="form-control" id="apellido" name="apellido" value={this.state.apellido} onChange={this.handleChange} />
             </div>
             <div className="mb-3">
-              <label htmlFor="apellido" className="form-label">dni:</label>
+              <label htmlFor="dni" className="form-label">dni:</label>
               <input type="text" className="form-control" id="dni" name="dni" value={this.state.dni} onChange={this.handleChange} />
             </div>
             <button type="submit" className="btn btn-primary" >

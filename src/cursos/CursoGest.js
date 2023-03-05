@@ -4,20 +4,21 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams } from "react-router-dom";
 
-class InternalPersonaGest extends React.Component {
+class InternalCursoGest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dni: '',
+      id: '',
       nombre: '',
-      apellido: ''
+      descripcion: '',
+      anio:''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    if (this.props.params.dni) {
+    if (this.props.params.id) {
       let request = {
         method: 'GET',
         headers: {
@@ -26,7 +27,7 @@ class InternalPersonaGest extends React.Component {
         }
       };
 
-      fetch(`http://localhost:8080/api/persona/${this.props.params.dni}`, request)
+      fetch(`http://localhost:8080/api/curso/${this.props.params.id}`, request)
         .then(res => {
           return res.json().then(body => {
             return {
@@ -40,9 +41,11 @@ class InternalPersonaGest extends React.Component {
         .then(result => {
           if (result.ok) {
             this.setState({
-              dni: result.body.dni,
+              id: result.body.id,
               nombre: result.body.nombre,
-              apellido: result.body.apellido,
+              descripcion: result.body.descripcion,
+              anio: result.body.anio,
+
             });
           } else {
             toast.error(result.body.message, {
@@ -59,9 +62,10 @@ class InternalPersonaGest extends React.Component {
         })
     } else {
       this.setState({
-        dni: '',
+        id: '',
         nombre: '',
-        apellido: ''
+        descripcion: '',
+        anio:''
       });
     }
   }
@@ -73,13 +77,14 @@ class InternalPersonaGest extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     let data = {
-      dni: this.state.dni,
+      id: this.state.id,
       nombre: this.state.nombre,
-      apellido: this.state.apellido
+      descripcion: this.state.descripcion,
+      anio: this.state.anio,
     };
 
     let request = {
-      method: this.props.params.dni ? 'PUT' : 'POST',
+      method: this.props.params.id ? 'PUT' : 'POST',
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
@@ -87,7 +92,7 @@ class InternalPersonaGest extends React.Component {
       }
     };
 
-    const url = this.props.params.dni?`http://localhost:8080/api/persona/${this.props.params.dni}`:"http://localhost:8080/api/persona";
+    const url = this.props.params.id?`http://localhost:8080/api/curso/${this.props.params.id}`:"http://localhost:8080/api/curso";
 
     fetch(url, request)
       .then(res => {
@@ -112,7 +117,7 @@ class InternalPersonaGest extends React.Component {
             progress: undefined,
             theme: "light",
           });
-          this.props.navigate("/persona/list");
+          this.props.navigate("/cursos");
         } else {
           toast.error(result.body.message, {
             position: "bottom-right",
@@ -136,22 +141,23 @@ class InternalPersonaGest extends React.Component {
     return (
       <div className="row">
         <div className="col">
-          <h1>{this.props.params.dni ? "Modificando " + this.state.apellido : "Creando persona"}</h1>
+          <h1>{this.props.params.id ? "Modificando " + this.state.nombre : "Creando curso"}</h1>
           <form onSubmit={this.handleSubmit} method="POST">
-            <div className="mb-3">
-              <label htmlFor="dni" className="form-label">DNI</label>
-              <input type="text" className="form-control" id="dni" name="dni" value={this.state.dni} onChange={this.handleChange} />
-            </div>
+            
             <div className="mb-3">
               <label htmlFor="nombre" className="form-label">Nombre:</label>
               <input type="text" className="form-control" id="nombre" name="nombre" value={this.state.nombre} onChange={this.handleChange} />
             </div>
             <div className="mb-3">
-              <label htmlFor="apellido" className="form-label">Apellido:</label>
-              <input type="text" className="form-control" id="apellido" name="apellido" value={this.state.apellido} onChange={this.handleChange} />
+              <label htmlFor="descripcion" className="form-label">descripcion:</label>
+              <input type="text" className="form-control" id="descripcion" name="descripcion" value={this.state.descripcion} onChange={this.handleChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="anio" className="form-label">anio:</label>
+              <input type="text" className="form-control" id="anio" name="anio" value={this.state.anio} onChange={this.handleChange} />
             </div>
             <button type="submit" className="btn btn-primary" >
-              <span class="material-symbols-outlined center-align" >
+              <span className="material-symbols-outlined center-align" >
                 save
               </span>
               <span>
@@ -166,11 +172,12 @@ class InternalPersonaGest extends React.Component {
 }
 
 
-export function PersonaGest(props) {
+
+export function CursoGest(props) {
   const navigate = useNavigate();
   const params = useParams();
 
-  return <InternalPersonaGest navigate={navigate} params={params} />
+  return <InternalCursoGest navigate={navigate} params={params} />
 }
 
-export default PersonaGest;
+export default CursoGest;

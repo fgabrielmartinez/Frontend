@@ -60,7 +60,7 @@ class InternalLogin extends React.Component {
             theme: "light",
           });
 
-          this.props.navigate("/persona/list");
+          this.props.navigate("/");
         } else {
           toast.error(result.body.message, {
             position: "bottom-right",
