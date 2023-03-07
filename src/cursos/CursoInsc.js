@@ -1,25 +1,23 @@
+import { Link, useNavigate } from "react-router-dom";
 import React from "react";
-import Menu from "../Menu";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
-class InternalCursoInsc extends React.Component {
+
+class CursoInsc extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
       alumnoToDelete: {},
       modalConfirmarEliminacion: false,
-      alumno: []
+      alumno: [],
+      persona: []
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
   }
-
 
   handleClose() {
     this.setState({
@@ -33,133 +31,87 @@ class InternalCursoInsc extends React.Component {
     });
   }
 
-  onDelete() {
-    let request = {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        "Accept": 'application/json'
-      }
-    };
-
-    fetch(`http://localhost:8080/api/alumno/${this.state.alumnoToDelete.id}`, request)
-      .then(res => {
-        return res.json().then(body => {
-          return {
-            status: res.status,
-            ok: res.ok,// = true => status >=200 && status < 300
-            headers: res.headers,
-            body: body
-          };
-        });
-      })
-      .then(result => {
-        if (result.ok) {
-          toast.success(result.body.message, {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          this.componentDidMount();
-        } else {
-          toast.error(result.body.message, {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-        }
-      });
+  onDelete(alumno) {
+    let alumnos_curso = [...this.state.alumnos_curso];
+    alumnos_curso.splice(alumnos_curso.indexOf(alumno.id), 1);
+    this.setState({
+      alumnos_curso: alumnos_curso
+    });
   }
-
+  onAdd(alumno) {
+    let alumnos_curso = [...this.state.alumnos_curso];
+    alumnos_curso.push(alumno.id);
+    this.setState({
+      alumnos_curso: alumnos_curso
+    })
+  };
 
   componentDidMount() {
+    //  let alumnos_curso = [4,5,6];
 
-    if (this.props.params.id) {
-      let request = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          "Accept": 'application/json',
-
-        }
-      };
-
-      fetch(`http://localhost:8080/api/curso/byid/${this.props.params.id}`, request)
-        .then(res => {
-          return res.json().then(body => {
-            return {
-              status: res.status,
-              ok: res.ok,
-              headers: res.headers,
-              body: body
-            };
-          });
-        })
-        .then(result => {
-          if (result.ok) {
-            this.setState({
-
-              alumno: result.body
-
-            });
-          } else {
-            toast.error(result.body.message, {
-              position: "bottom-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            });
-          }
-        })
-    } else {
-      this.setState({
-        id: '',
-        nombre: '',
-        apellido: '',
-        dni: ''
-      });
-    }
-  }
-
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    let data = {
-      id: this.state.id,
-      nombre: this.state.nombre,
-      apellido: this.state.apellido,
-      dni: this.state.dni,
-    };
-
-    let request = {
-      method: this.props.params.id ? 'PUT' : 'POST',
-      body: JSON.stringify(data),
+    //  this.setState({ alumnos_curso: alumnos_curso })
+    let request2 = {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        "Accept": 'application/json'
+        "Accept": 'application/json',
+        "authorization": sessionStorage.getItem('token')
       }
     };
+    let id_curso=2
+    fetch(`http://localhost:8080/api/curso/insc/`+id_curso, request2)
+    .then(res => {
+      return res.json().then(body => {
+        return {
+          status: res.status,
+          ok: res.ok,
+          headers: res.headers,
+          body: body
+        };
+      });
+    })
+    .then(result => {
+      if (result.ok) {
+        let alumnos_curso=[];
+       
+         for(var i=0; i<result.body.length; i++){
+           alumnos_curso.push(result.body[i].id_alumno)
+         }
+        this.setState({ alumnos_curso:alumnos_curso});
+      } else {
+        toast.error(result.body.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    },
+      (error) => {
+        console.log(error);
+        this.setState({
+          error,
+          alumno: [],
+          modalConfirmarEliminacion: false
+        });
+      }
+    )
 
-    const url = this.props.params.id ? `http://localhost:8080/api/curso/${this.props.params.id}` : "http://localhost:8080/api/curso";
 
-    fetch(url, request)
+
+    let request = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "Accept": 'application/json',
+        "authorization": sessionStorage.getItem('token')
+      }
+    };
+    fetch("http://localhost:8080/api/alumno", request)
       .then(res => {
         return res.json().then(body => {
           return {
@@ -172,17 +124,10 @@ class InternalCursoInsc extends React.Component {
       })
       .then(result => {
         if (result.ok) {
-          toast.success(result.body.message, {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
+          this.setState({
+            modalConfirmarEliminacion: false,
+            alumno: result.body // updated line
           });
-          this.props.navigate("/cursos");
         } else {
           toast.error(result.body.message, {
             position: "bottom-right",
@@ -198,20 +143,47 @@ class InternalCursoInsc extends React.Component {
       },
         (error) => {
           console.log(error);
+          this.setState({
+            error,
+            alumno: [],
+            modalConfirmarEliminacion: false
+          });
         }
-      );
+      )
   }
-
   render() {
-    debugger
+
     let rowsTable = this.state.alumno.map((alumno, index) => {
+      let inscripto = this.state.alumnos_curso.indexOf(alumno.id) != -1;
 
       return (
 
-        <tr key={index}>
+        <tr key={index} className={inscripto ? "table-success" : ""}>
+          <td>{alumno.id}</td>
           <td>{alumno.nombre}</td>
           <td>{alumno.apellido}</td>
           <td>{alumno.dni}</td>
+          <td>
+            <abbr title="Agregar Alumno">
+              {!inscripto &&
+                <button className="btn btn-primary" onClick={() => this.onAdd(alumno)}>
+                  <span className="material-symbols-outlined">
+                    add
+                  </span>
+                </button>
+              }
+            </abbr>
+
+            <abbr title="Eliminar Alumno">
+              {inscripto &&
+                <button className="btn btn-danger" onClick={() => this.onDelete(alumno)}>
+                  <span className="material-symbols-outlined">
+                    Delete
+                  </span>
+                </button>
+              }
+            </abbr>
+          </td>
         </tr>
 
       )
@@ -219,35 +191,36 @@ class InternalCursoInsc extends React.Component {
 
     return (
       <>
-        <h1>{"Inscriptos en curso " + this.props.params.nombre}
-
-        </h1>
-
-        <table className="table table-striped">
+        <h1>{"Gestión de inscriptos "}</h1>
+        <table className="table table">
           <thead>
             <tr>
+              <th>Id</th>
               <th>Nombre</th>
               <th>Apellido</th>
               <th>DNI</th>
+              <th>Acciones</th>
+
             </tr>
           </thead>
           <tbody>
             {rowsTable}
           </tbody>
         </table>
-
+        <div className="row">
+          <div className="col">
+            <abbr title="Guardar Inscripción">
+              <button className="btn btn-primary" onClick={() => this.onDelete()}>
+               <span>Guardar</span>
+              </button>
+            </abbr>
+          </div>
+        </div>
       </>
 
     );
   }
-
-
 }
-export function CursoInsc(props) {
-  const navigate = useNavigate();
-  const params = useParams();
 
-  return <InternalCursoInsc navigate={navigate} params={params} />
-}
 
 export default CursoInsc;
