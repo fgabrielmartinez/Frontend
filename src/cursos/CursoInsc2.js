@@ -104,6 +104,7 @@ this.setState({
       headers: {
         'Content-Type': 'application/json',
         "Accept": 'application/json',
+        "authorization": sessionStorage.getItem('token')
 
       }
     };
