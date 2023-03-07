@@ -34,7 +34,8 @@ class alumnos extends React.Component {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        "Accept": 'application/json'
+        "Accept": 'application/json',
+        "authorization": sessionStorage.getItem('token')
       }
     };
 

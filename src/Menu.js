@@ -40,24 +40,24 @@ function Menu() {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li className="nav-item">
-                                <Link to="/" className="nav-link active">Home</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to="/Cursos" className="nav-link">Cursos</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to="/Alumno" className="nav-link">Alumnos</Link>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" onClick={() => salir()}>
-                                    {decoded.nickname}&nbsp; 
-                                    <FontAwesomeIcon icon={faArrowRightFromBracket} />
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+    <ul className="navbar-nav me-auto mb-2 mb-lg-0 ml-auto"> {/* added ml-auto class */}
+        <li className="nav-item">
+            <Link to="/" className="nav-link active">Home</Link>
+        </li>
+        <li className="nav-item">
+            <Link to="/Cursos" className="nav-link">Cursos</Link>
+        </li>
+        <li className="nav-item">
+            <Link to="/Alumno" className="nav-link">Alumnos</Link>
+        </li>
+        <li className="nav-item">
+            <a className="nav-link" onClick={() => salir()}>
+                {decoded.nickname}&nbsp; 
+                <FontAwesomeIcon icon={faArrowRightFromBracket} />
+            </a>
+        </li>
+    </ul>
+</div>
 
                 </div>
             </nav>

@@ -23,7 +23,8 @@ class InternalCursoGest extends React.Component {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          "Accept": 'application/json'
+          "Accept": 'application/json',
+          "authorization": sessionStorage.getItem('token')
         }
       };
 
@@ -88,7 +89,8 @@ class InternalCursoGest extends React.Component {
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
-        "Accept": 'application/json'
+        "Accept": 'application/json',
+        "authorization": sessionStorage.getItem('token')
       }
     };
 

@@ -240,7 +240,7 @@ class InternalCursoInsc extends React.Component {
 
     return (
       <>
-        <h1>{"Gestión de inscriptos "}</h1>
+        <h1>Gestión de inscriptos en {this.props.params.nombre}</h1>
         <table className="table table">
           <thead>
             <tr>
