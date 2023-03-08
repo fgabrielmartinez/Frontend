@@ -1,22 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome' 
-import { faArrowRightFromBracket, faCar, faCarBurst, faCartShopping, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 
 function Menu() {
     const navigate = useNavigate();
     const [token, setToken] = useState("");
 
-    const intervalId = setInterval(()=>{
+    const intervalId = setInterval(() => {
         let t = sessionStorage.getItem('token');
-        if(t!==token){
+        if (t !== token) {
             setToken(t);
         }
-    },1000);
+    }, 1000);
 
-    useEffect(() => { 
-        return ()=>{
+    useEffect(() => {
+        return () => {
             clearInterval(intervalId);
         };
     });
@@ -25,13 +25,13 @@ function Menu() {
         console.log("salir");
         sessionStorage.removeItem("token");
         setToken("");
-        navigate("/"); 
+        navigate("/");
     }
 
-    if (token!=="" && token !== null) {
-        var decoded = jwt_decode(token); 
+    if (token !== "" && token !== null) {
+        var decoded = jwt_decode(token);
         return <>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <nav className="navbar navbar-expand-lg bg-body-secondary">
                 <div className="container">
                     <Link to="/" className="navbar-brand">
                         <img src="/logo.png" className="nav-img-main" />
@@ -40,31 +40,31 @@ function Menu() {
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul className="navbar-nav me-auto mb-2 mb-lg-0 ml-auto"> {/* added ml-auto class */}
-        <li className="nav-item">
-            <Link to="/" className="nav-link active">Home</Link>
-        </li>
-        <li className="nav-item">
-            <Link to="/Cursos" className="nav-link">Cursos</Link>
-        </li>
-        <li className="nav-item">
-            <Link to="/Alumno" className="nav-link">Alumnos</Link>
-        </li>
-        <li className="nav-item">
-            <a className="nav-link" onClick={() => salir()}>
-                {decoded.nickname}&nbsp; 
-                <FontAwesomeIcon icon={faArrowRightFromBracket} />
-            </a>
-        </li>
-    </ul>
-</div>
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0 ml-auto"> {/* added ml-auto class */}
+                            <li className="nav-item">
+                                <Link to="/" className="nav-link active">Home</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/Cursos" className="nav-link">Cursos</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/Alumno" className="nav-link">Alumnos</Link>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" onClick={() => salir()}>
+                                    {decoded.nickname}&nbsp;
+                                    <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
                 </div>
             </nav>
         </>
     } else {
         return <>
-            <nav className="navbar navbar-expand-lg bg-body-tertiary">
+            <nav className="navbar navbar-expand-lg bg-body-secondary">
                 <div className="container">
                     <Link to="/" className="navbar-brand">
                         <img src="/logo.png" className="nav-img-main" />
@@ -80,10 +80,10 @@ function Menu() {
                             <li className="nav-item">
                                 <Link to="/Cursos2" className="nav-link">Cursos</Link>
                             </li>
-                           
+
                             <li className="nav-item">
                                 <Link to="/login" className="nav-link">
-                                    Ingresar                  
+                                    Ingresar
                                 </Link>
                             </li>
                         </ul>
